@@ -3,66 +3,24 @@ var accountHash;
 
 $(document).ready(function(){
     var accountParam = getQueryParams(document.location.search).account;
-    document.getElementById('accountInput').placeholder = accountParam ? "Current: " + accountParam : "Account";
+    document.getElementById('accountInput').placeholder = accountParam ? "Current account: " + accountParam : "Search for account";
     account = accountParam ? accountParam : 0;
-    // $("#tabs").tabs();
     $('#workersTable').DataTable({
-        info: false,
-/*
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.modal( {
-                    header: function ( row ) {
-                        return 'Details:';
-                    }
-                } ),
-                renderer: function ( api, rowIdx, columns ) {
-                    var data = $.map( columns, function ( col, i ) {
-                        return '<tr>'+
-                            '<td>'+col.title+':'+'</td> '+
-                            '<td>'+col.data+'</td>'+
-                            '</tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr>';
-                    } ).join('');
-
-                    return $('<table/>').append( data );
-                }
-            }
-        }
-*/
+        info: false
     });
     $('#calculatorTable').DataTable({
         info: false,
         paging: false,
         searching: false,
-/*
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.modal( {
-                    header: function ( row ) {
-                        return 'Details:';
-                    }
-                } ),
-                renderer: function ( api, rowIdx, columns ) {
-                    var data = $.map( columns, function ( col, i ) {
-                        return '<tr>'+
-                            '<td>'+col.title+':'+'</td> '+
-                            '<td>'+col.data+'</td>'+
-                            '</tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr>';
-                    } ).join('');
-
-                    return $('<table/>').append( data );
-                }
-            }
-        }
-*/
+        order: [[1, "asc"]]
     });
-    // updateHashRate();
+    updateHashRate();
     updateTabs();
 });
 
 setInterval(function() {
     "use strict";
-    // updateHashRate();
+    updateHashRate();
     updateTabs();
 }, 60000);
 

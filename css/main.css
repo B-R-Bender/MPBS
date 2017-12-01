@@ -1,11 +1,31 @@
-
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
+#hashrateRow .col-md-3{
+    width: 30%;
+}
 
+#hashrateRow .panel-primary{
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
 
+#hashrateRow .panel-heading{
+    background: #4CAF50 none;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+#chartRow #chartDiv{
+    height: 500px;
+}
 
 
 
