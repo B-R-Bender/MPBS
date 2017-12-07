@@ -36,27 +36,27 @@ function getAndUpdateRate(hashType) {
     var url, data;
     switch (hashType) {
         case ("hashrate") :
-            // url = "http://monopool.io/api/eth/hashrate";
-            url = "https://api.nanopool.org/v1/eth/hashrate/" + account;
+            url = "http://monopool.io/api/eth/hashrate";
+            // url = "https://api.nanopool.org/v1/eth/hashrate/" + account;
             data = JSON.stringify([account]);
             break;
         case ("average_hashrate") :
-            // url = "http://monopool.io/api/eth/avghashratelimited";
-            url = "https://api.nanopool.org/v1/eth/avghashratelimited/" + account + "/6";
+            url = "http://monopool.io/api/eth/avghashratelimited";
+            // url = "https://api.nanopool.org/v1/eth/avghashratelimited/" + account + "/6";
             data = JSON.stringify([account, "6"]);
             break;
         case ("last_reported_hashrate") :
-            // url = "http://monopool.io/api/eth/reportedhashrate";
-            url = "https://api.nanopool.org/v1/eth/reportedhashrate/" + account;
+            url = "http://monopool.io/api/eth/reportedhashrate";
+            // url = "https://api.nanopool.org/v1/eth/reportedhashrate/" + account;
             data = JSON.stringify([account]);
             break;
     }
     $.ajax({
-        // type:"POST",
-        type:"GET",
+        type:"POST",
+        // type:"GET",
         url: url,
         dataType: "json",
-        // data: data,
+        data: data,
         crossDomain : true
     }).done(function (responseData) {
         updateHashRateData(hashType ,responseData);
@@ -95,28 +95,28 @@ function getAndUpdateTabs(tab) {
     var url, data;
     switch (tab) {
         case ("workers") :
-            // url = "http://monopool.io/api/eth/workers";
-            url = "https://api.nanopool.org/v1/eth/workers/" + account;
+            url = "http://monopool.io/api/eth/workers";
+            // url = "https://api.nanopool.org/v1/eth/workers/" + account;
             data = JSON.stringify([account]);
             break;
         case ("calculator") :
-            // url = "http://monopool.io/api/eth/approximated_earnings";
             if (!accountHash) {
                 setTimeout(function(){
                     getAndUpdateTabs("calculator");
                 }, 100);
                 return;
             }
-            url = "https://api.nanopool.org/v1/eth/approximated_earnings/" + accountHash;
+            url = "http://monopool.io/api/eth/approximated_earnings";
+            // url = "https://api.nanopool.org/v1/eth/approximated_earnings/" + accountHash;
             data = JSON.stringify([accountHash]);
             break;
     }
     $.ajax({
-        // type:"POST",
-        type:"GET",
+        type:"POST",
+        // type:"GET",
         url: url,
         dataType: "json",
-        // data: data,
+        data: data,
         crossDomain : true
     }).done(function (response) {
         updateTabData(tab, response.data);

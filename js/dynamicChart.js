@@ -5,10 +5,12 @@ AmCharts.ready(function () {
 function getDataAndGenerateChart() {
     "use strict";
     $.ajax({
-        type: "get",
-        url: "https://api.nanopool.org/v1/eth/hashratechart/" + account,
-        // url: "http://monopool.io/api/eth/hashratechart" + account,
+        type:"POST",
+        // type: "get",
+        url: "http://monopool.io/api/eth/hashratechart",
+        // url: "https://api.nanopool.org/v1/eth/hashratechart/" + account,
         dataType: "json",
+        data: JSON.stringify([account]),
         crossDomain: true
     }).done(function (responseData) {
         generateChart(convertChartData(responseData.data));
