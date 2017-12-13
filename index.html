@@ -36,7 +36,7 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div class="container">
+<div id="accountSearchContainer" class="container page-center">
     <!--Account input-->
     <div id="accountRow" class="row">
         <div class="col-lg-6" style="float: none; margin: 0 auto">
@@ -48,10 +48,13 @@
             </div>
         </div>
     </div>
-    <!-- Example row of columns -->
+</div>
+
+<div id="dataContainer" class="container hidden">
+    <!-- Account base statistic-->
     <div id="hashrateRow" class="row">
         <h3>
-            <div class="col-md-4 text-center">
+            <div class="col-md-3 text-center">
                 <div class="panel-primary">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -63,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-3 text-center">
                 <div class="panel-primary">
                     <div class="panel-heading">
                         <div class="panel-title">Average Hashrate for last 6 hours</div>
@@ -73,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-3 text-center">
                 <div class="panel-primary">
                     <div class="panel-heading">
                         <div class="panel-title">Last Reported Hashrate</div>
@@ -83,12 +86,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-3 text-center">
+                <div class="panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-title">Current balance</div>
+                        <div class="panel-body" data-bind="current_balance">
+                            0.0 ETH
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h3>
     </div>
 
     <div class="row">&nbsp;</div>
 
-    <div id="chartRow" class="row">
+    <div id="chartRow" class="row hidden">
         <div class="col-md-12">
             <div id="chartDiv">&nbsp;</div>
         </div>

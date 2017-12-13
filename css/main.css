@@ -2,8 +2,17 @@
    Author's custom styles
    ========================================================================== */
 
-#hashrateRow .col-md-3{
-    width: 30%;
+.page-center {
+    position: absolute;
+    top: 40%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#hashrateRow .panel-title{
+    min-height: 35px;
 }
 
 #hashrateRow .panel-primary{

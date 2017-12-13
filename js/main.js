@@ -1,10 +1,11 @@
-var account;
-var accountHash;
+var account, accountHash;
+var HASHRATE = "hashrate",
+    AVERAGE_HASHRATE = "average_hashrate",
+    LAST_HASHRATE = "last_reported_hashrate",
+    BALANCE = "current_balance";
 
 $(document).ready(function(){
-    var accountParam = getQueryParams(document.location.search).account;
-    document.getElementById('accountInput').placeholder = accountParam ? "Current account: " + accountParam : "Search for account";
-    account = accountParam ? accountParam : 0;
+    account = getQueryParams(document.location.search).account;
     $('#workersTable').DataTable({
         info: false
     });
@@ -14,40 +15,52 @@ $(document).ready(function(){
         searching: false,
         order: [[1, "asc"]]
     });
-    updateHashRate();
-    updateTabs();
+    if (account) {
+        $("#dataContainer").removeClass("hidden");
+        $("#accountSearchContainer").removeClass("page-center");
+        $("#accountInput").attr("placeholder", account ? "Current account: " + account : "Search for account");
+        updateHashRate();
+        updateTabs();
+    }
 });
 
 setInterval(function() {
     "use strict";
-    updateHashRate();
-    updateTabs();
+    if (account) {
+        updateHashRate();
+        updateTabs();
+    }
 }, 60000);
 
 function updateHashRate() {
     "use strict";
-    getAndUpdateRate("hashrate");
-    getAndUpdateRate("average_hashrate");
-    getAndUpdateRate("last_reported_hashrate");
+    getAndUpdateRate(HASHRATE);
+    getAndUpdateRate(AVERAGE_HASHRATE);
+    getAndUpdateRate(LAST_HASHRATE);
+    getAndUpdateRate(BALANCE);
 }
-
 
 function getAndUpdateRate(hashType) {
     var url, data;
     switch (hashType) {
-        case ("hashrate") :
+        case (HASHRATE) :
             url = "http://monopool.io/api/eth/hashrate";
             // url = "https://api.nanopool.org/v1/eth/hashrate/" + account;
             data = JSON.stringify([account]);
             break;
-        case ("average_hashrate") :
+        case (AVERAGE_HASHRATE) :
             url = "http://monopool.io/api/eth/avghashratelimited";
             // url = "https://api.nanopool.org/v1/eth/avghashratelimited/" + account + "/6";
             data = JSON.stringify([account, "6"]);
             break;
-        case ("last_reported_hashrate") :
+        case (LAST_HASHRATE) :
             url = "http://monopool.io/api/eth/reportedhashrate";
             // url = "https://api.nanopool.org/v1/eth/reportedhashrate/" + account;
+            data = JSON.stringify([account]);
+            break;
+        case (BALANCE) :
+            url = "http://monopool.io/api/eth/balance";
+            // url = "https://api.nanopool.org/v1/eth/balance/" + account;
             data = JSON.stringify([account]);
             break;
     }
@@ -71,18 +84,28 @@ function updateHashRateData(type, data){
     "use strict";
     var bind;
     switch (type) {
-        case "hashrate":
-            bind = document.querySelector('div[data-bind="hashrate"]');
+        case HASHRATE:
+            bind = document.querySelector(getSelector(HASHRATE));
             accountHash = data.data;
             break;
-        case "average_hashrate":
-            bind = document.querySelector('div[data-bind="average_hashrate"]');
+        case AVERAGE_HASHRATE:
+            bind = document.querySelector(getSelector(AVERAGE_HASHRATE));
             break;
-        case "last_reported_hashrate":
-            bind = document.querySelector('div[data-bind="last_reported_hashrate"]');
+        case LAST_HASHRATE:
+            bind = document.querySelector(getSelector(LAST_HASHRATE));
             break;
+        case BALANCE:
+            var roundedBalanceValue = roundTo(data.data, 8);
+            document.querySelector(getSelector(BALANCE)).innerHTML
+                = isNaN(roundedBalanceValue) ? "No data available" : roundedBalanceValue + " ETH";
+            return;
     }
-    bind.innerHTML = roundTo(data.data, 2) + " ,Mh/s";
+    var roundedValue = roundTo(data.data, 2);
+    bind.innerHTML = isNaN(roundedValue) ? "No data available" : roundedValue + " Mh/s";
+}
+
+function getSelector(dataBind) {
+    return "div[data-bind=\"" + dataBind + "\"]";
 }
 
 function updateTabs(){
